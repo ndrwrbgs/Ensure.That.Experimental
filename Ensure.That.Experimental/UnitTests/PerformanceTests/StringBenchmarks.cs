@@ -5,6 +5,8 @@
 
     using DelMe.NBench.Demo.PerfAssert.Library;
 
+    using Ensure.That.Experimental;
+
     using EnsureThat;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,7 +41,9 @@
             // TODO: Would be nice for the runner to be able to do the loop for us for super fast code
             for (int i = 0; i < iterations; i++)
             {
-                Ensure.That(this.testString).StartsWith(this.maybePrefix);
+                Strings.StartsWith(
+                    Ensure.That(this.testString),
+                    this.maybePrefix);
             }
         }
 
@@ -49,13 +53,13 @@
         {
             for (int i = 0; i < iterations; i++)
             {
-                if (!this.testString.StartsWith(this.maybePrefix))
+                const int multiplier = 2;
+                for (int j = 0; j < multiplier; j++)
                 {
-                    throw new ArgumentException();
-                }
-                if (!this.testString.StartsWith(this.maybePrefix))
-                {
-                    throw new ArgumentException();
+                    if (!this.testString.StartsWith(this.maybePrefix))
+                    {
+                        throw new ArgumentException();
+                    }
                 }
             }
         }
